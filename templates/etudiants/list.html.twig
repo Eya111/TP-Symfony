@@ -1,0 +1,11 @@
+<h1>Liste des modules</h1>
+
+{% if modules is empty %}
+    <p>Aucun module disponible.</p>
+{% else %}
+    <ul>
+        {% for module in modules %}
+            <li>{{ module.nom | upper }} - {{ module.code }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}

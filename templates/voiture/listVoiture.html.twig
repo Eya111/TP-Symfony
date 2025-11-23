@@ -1,0 +1,41 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Liste des voitures{% endblock %}
+
+{% block body %}
+    <h1>Liste des voitures</h1>
+
+    <a href="{{ path('voiture_add') }}">Ajouter une nouvelle voiture</a>
+
+    <table border="1" cellpadding="5" cellspacing="0">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Série</th>
+            <th>Date mise en marche</th>
+            <th>Modèle</th>
+            <th>Prix par jour</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for voiture in voitures %}
+            <tr>
+                <td>{{ voiture.id }}</td>
+                <td>{{ voiture.serie }}</td>
+                <td>{{ voiture.dateMiseEnMarche ? voiture.dateMiseEnMarche|date('Y-m-d') : '' }}</td>
+                <td>{{ voiture.modele }}</td>
+                <td>{{ voiture.prixJour }}</td>
+                <td>
+                    <a href="{{ path('voiture_update', {'id': voiture.id}) }}">Modifier</a> |
+                    <a href="{{ path('voiture_delete', {'id': voiture.id}) }}" onclick="return confirm('Voulez-vous vraiment supprimer cette voiture ?');">Supprimer</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">Aucune voiture disponible.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Ajouter / Modifier une voiture{% endblock %}
+
+{% block body %}
+    <h1>Ajouter / Modifier une voiture</h1>
+
+    {{ form_start(form) }}
+    {{ form_row(form.serie) }}
+    {{ form_row(form.dateMiseEnMarche) }}
+    {{ form_row(form.modele) }}
+    {{ form_row(form.prixJour) }}
+    <button type="submit">Enregistrer</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('voitures_list') }}">Retour à la liste des voitures</a>
+{% endblock %}
