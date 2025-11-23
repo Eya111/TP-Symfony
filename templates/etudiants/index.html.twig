@@ -5,5 +5,5 @@
 {% block body %}
     <h1>Page Index — Héritage OK</h1>
 
-    {% include 'etudiants/listVoiture.html.twig' %}
+    {% include 'etudiants/list.html.twig' with {'modules': modules} %}
 {% endblock %}

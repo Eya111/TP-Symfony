@@ -36,7 +36,7 @@ class EtudiantController extends AbstractController
             ['nom' => 'Informatique', 'code' => 'INF101']
         ];
 
-        return $this->render('etudiants/listVoiture.html.twig', [
+        return $this->render('etudiants/list.html.twig', [
             'modules' => $modules
         ]);
     }
@@ -50,8 +50,17 @@ class EtudiantController extends AbstractController
     #[Route('/index-fils', name: 'index_fils')]
     public function indexFils(): Response
     {
-        return $this->render('etudiants/listVoiture.html.twig');
+        $modules = [
+            ['nom' => 'Mathématiques', 'code' => 'MAT101'],
+            ['nom' => 'Physique', 'code' => 'PHY101'],
+            ['nom' => 'Informatique', 'code' => 'INF101']
+        ];
+
+        return $this->render('etudiants/index.html.twig', [
+            'modules' => $modules
+        ]);
     }
+
 
 }
 
