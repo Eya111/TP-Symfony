@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Statistiques DBAL{% endblock %}
+
+{% block body %}
+
+    <div class="container my-5">
+        <h1 class="text-center mb-4 text-primary">Statistiques de la Base de Données (via DBAL)</h1>
+        <p class="text-center text-muted">Ces données sont récupérées directement par des requêtes SQL natives, démontrant l'utilisation du Database Abstraction Layer (DBAL).</p>
+
+        <div class="row justify-content-center mt-5">
+
+            {# Carte 1 : Total Voitures #}
+            <div class="col-md-5 mb-4">
+                <div class="card text-center bg-primary text-white shadow-lg border-0 rounded-3 h-100">
+                    <div class="card-header h4 py-3 bg-dark bg-opacity-25 border-0">
+                        <i class="fas fa-car me-2"></i> Total Voitures
+                    </div>
+                    <div class="card-body d-flex flex-column justify-content-center">
+                        <p class="display-3 fw-bold m-0">{{ countVoitures }}</p>
+                    </div>
+                    <div class="card-footer bg-dark bg-opacity-25 border-0">
+                        <small>Nombre d'enregistrements dans la table **voiture** (SQL : `SELECT COUNT(id) FROM voiture`).</small>
+                    </div>
+                </div>
+            </div>
+
+            {# Carte 2 : Total Modèles #}
+            <div class="col-md-5 mb-4">
+                <div class="card text-center bg-secondary text-white shadow-lg border-0 rounded-3 h-100">
+                    <div class="card-header h4 py-3 bg-dark bg-opacity-25 border-0">
+                        <i class="fas fa-tags me-2"></i> Total Modèles
+                    </div>
+                    <div class="card-body d-flex flex-column justify-content-center">
+                        <p class="display-3 fw-bold m-0">{{ countModeles }}</p>
+                    </div>
+                    <div class="card-footer bg-dark bg-opacity-25 border-0">
+                        <small>Nombre d'enregistrements dans la table **modele** (SQL : `SELECT COUNT(id) FROM modele`).</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-5 text-center">
+            <a href="{{ path('voitures_list') }}" class="btn btn-outline-primary btn-lg"><i class="fas fa-arrow-left me-2"></i> Retour à la liste DQL</a>
+        </div>
+
+
+    </div>
+{% endblock %}

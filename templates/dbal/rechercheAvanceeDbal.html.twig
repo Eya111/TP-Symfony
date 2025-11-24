@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recherche Avancée DBAL{% endblock %}
+
+{% block body %}
+
+    <div class="container my-5">
+        <h1 class="text-center mb-4 text-warning">Recherche Avancée de Voitures (DBAL)</h1>
+        <p class="text-center text-muted">Construction de la requête SQL dynamique via le QueryBuilder DBAL.</p>
+
+        {# 1. AFFICHAGE DU FORMULAIRE DE RECHERCHE #}
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-8">
+                {{ form_start(form, {'attr': {'class': 'p-4 border rounded shadow-sm bg-light'}}) }}
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        {{ form_row(form.prixMin, {'label': 'Prix Minimum (€)'}) }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        {{ form_row(form.prixMax, {'label': 'Prix Maximum (€)'}) }}
+                    </div>
+                </div>
+                <div class="d-grid mt-3">
+                    <button type="submit" class="btn btn-warning btn-lg">
+                        <i class="fas fa-search"></i> {{ form_widget(form.rechercher) }}
+                    </button>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+
+        {# 2. AFFICHAGE DES RÉSULTATS #}
+        {% if form.isSubmitted %}
+            <h2 class="text-center mb-3 text-warning">
+                Résultats DBAL ({{ voitures|length }} trouvé(s))
+            </h2>
+
+            {% if voitures is not empty %}
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover mt-4">
+                        <thead class="table-dark">
+                        <tr>
+                            <th>Série</th>
+                            <th>Date Mise en Marche</th>
+                            <th>Modèle</th>
+                            <th>Pays d'Origine</th>
+                            <th>Prix Jour (€)</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for voiture in voitures %}
+                            <tr>
+                                {# ATTENTION: On utilise les clés SQL brutes qui sont des strings ! #}
+                                <td>{{ voiture.serie }}</td>
+                                <td>{{ voiture.date_mise_en_marche|date('Y-m-d') }}</td>
+                                <td>{{ voiture.modele_libelle }}</td>
+                                <td>{{ voiture.modele_pays }}</td>
+                                <td>{{ voiture.prix_jour|number_format(2, ',', ' ') }} €</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="alert alert-danger text-center" role="alert">
+                    Aucune voiture ne correspond aux critères de recherche spécifiés.
+                </div>
+            {% endif %}
+        {% else %}
+            <div class="alert alert-info text-center" role="alert">
+                Entrez vos critères de recherche ci-dessus pour lancer la requête SQL via DBAL.
+            </div>
+        {% endif %}
+
+        <div class="mt-5 text-center">
+            <a href="{{ path('recherche_avancee') }}" class="btn btn-outline-info"><i class="fas fa-magic me-2"></i> Comparer à la Recherche DQL</a>
+        </div>
+
+
+    </div>
+{% endblock %}

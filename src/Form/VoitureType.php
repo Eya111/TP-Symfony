@@ -20,7 +20,12 @@ class VoitureType extends AbstractType
                 'widget' => 'single_text', // pour un champ HTML5 date
                 'html5' => true,           // permet le datepicker natif du navigateur
             ])
-            ->add('modele', TextType::class)
+            ->add('modele', EntityType::class, [
+                'class' => Modele::class,
+                'choice_label' => 'libelle',
+                'placeholder' => 'Choisir un modèle',
+                'label' => 'Modèle',
+            ])
             ->add('prixJour', NumberType::class)
         ;
     }

@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recherche Avancée de Voitures (DQL QueryBuilder){% endblock %}
+
+{% block body %}
+
+    <div class="container my-5">
+        <h1 class="text-center mb-4">Recherche Avancée de Voitures</h1>
+        <p class="text-center text-muted">Utilisation de DQL QueryBuilder pour les critères multiples (Prix et Date).</p>
+
+        {# 1. AFFICHAGE DU FORMULAIRE DE RECHERCHE #}
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-8">
+                {{ form_start(form, {'attr': {'class': 'p-4 border rounded shadow-sm bg-light'}}) }}
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        {{ form_row(form.prixMin, {'label': 'Prix Minimum (€)'}) }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        {{ form_row(form.prixMax, {'label': 'Prix Maximum (€)'}) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        {{ form_row(form.dateDebut, {'label': 'Mise en Marche Après'}) }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        {{ form_row(form.dateFin, {'label': 'Mise en Marche Avant'}) }}
+                    </div>
+                </div>
+                <div class="d-grid mt-3">
+                    <button type="submit" class="btn btn-success btn-lg">
+                        <i class="fas fa-search"></i> {{ form_widget(form.rechercher) }}
+                    </button>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+
+        {# 2. AFFICHAGE DES RÉSULTATS #}
+        {% if form.isSubmitted %}
+            <h2 class="text-center mb-3">
+                Résultats de la Recherche ({{ voitures|length }} trouvé(s))
+            </h2>
+
+            {% if voitures is not empty %}
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover mt-4">
+                        <thead class="table-dark">
+                        <tr>
+                            <th>Série</th>
+                            <th>Date Mise en Marche</th>
+                            <th>Modèle</th>
+                            <th>Prix Jour (€)</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for voiture in voitures %}
+                            <tr>
+                                <td>{{ voiture.serie }}</td>
+                                <td>{{ voiture.dateMiseEnMarche|date('Y-m-d') }}</td>
+                                <td>{{ voiture.modele.libelle }} ({{ voiture.modele.pays }})</td>
+                                <td>{{ voiture.prixJour|number_format(2, ',', ' ') }} €</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="alert alert-danger text-center" role="alert">
+                    Aucune voiture ne correspond aux critères de recherche spécifiés.
+                </div>
+            {% endif %}
+        {% else %}
+            <div class="alert alert-info text-center" role="alert">
+                Entrez vos critères de recherche ci-dessus pour lancer la requête DQL.
+            </div>
+        {% endif %}
+
+
+    </div>
+{% endblock %}

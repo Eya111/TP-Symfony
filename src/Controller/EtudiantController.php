@@ -56,7 +56,7 @@ class EtudiantController extends AbstractController
             ['nom' => 'Informatique', 'code' => 'INF101']
         ];
 
-        return $this->render('etudiants/index.html.twig', [
+        return $this->render('etudiants/statsDbal.html.twig', [
             'modules' => $modules
         ]);
     }

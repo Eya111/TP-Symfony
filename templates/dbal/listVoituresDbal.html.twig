@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Voitures (DBAL SQL Natif){% endblock %}
+
+{% block body %}
+
+    <div class="container my-5">
+        <h1 class="text-center mb-4 text-secondary">Liste des Voitures (DBAL - SQL Natif)</h1>
+        <p class="text-center text-muted">Ces données sont le résultat d'une requête SQL native avec jointure, récupérées via fetchAllAssociative().</p>
+
+        {% if voitures is empty %}
+            <div class="alert alert-warning text-center" role="alert">
+                Aucune voiture trouvée dans la base de données.
+            </div>
+        {% else %}
+            <div class="table-responsive">
+                <table class="table table-striped table-hover mt-4">
+                    <thead class="table-dark">
+                    <tr>
+                        <th>Série</th>
+                        <th>Date Mise en Marche</th>
+                        <th>Prix Jour (€)</th>
+                        <th>Modèle</th>
+                        <th>Pays d'Origine</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for voiture in voitures %}
+                        <tr>
+                            {# Attention: On accède aux données par les clés SQL, pas par les méthodes d'entité! #}
+                            <td>{{ voiture.serie }}</td>
+                            <td>{{ voiture.date_mise_en_marche|date('Y-m-d') }}</td>
+                            <td>{{ voiture.prix_jour|number_format(2, ',', ' ') }} €</td>
+                            <td>{{ voiture.modele_libelle }}</td>
+                            <td>{{ voiture.modele_pays }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+
+        <div class="mt-5 text-center">
+            <a href="{{ path('dbal_stats') }}" class="btn btn-outline-secondary"><i class="fas fa-chart-bar me-2"></i> Voir les Stats DBAL</a>
+            <a href="{{ path('voitures_list') }}" class="btn btn-outline-primary"><i class="fas fa-list me-2"></i> Comparer à la Liste DQL</a>
+        </div>
+
+
+    </div>
+{% endblock %}
